@@ -301,3 +301,29 @@ public:
     }
 };
 
+class OnePersonStrategy: public IAgentStrategy{
+public:
+    // optimal for n_players = 1
+    void action(Table& table, void* memory_buffer) const override {
+        constexpr int k_mem_size = 10000;
+
+        int* int_buffer = reinterpret_cast<int*>(memory_buffer);
+        int n_cards = table.get_n_cards();
+        int maximum_flipped_val = table.get_maximum_flipped_val();
+        if (int_buffer[maximum_flipped_val + 1] != -1) {
+            int loc = int_buffer[maximum_flipped_val + 1];
+            table.query_val(loc);
+            table.flip_queried_card();
+        } else {
+            int read_cnt = int_buffer[k_mem_size - 1];
+            int val = table.query_val(read_cnt);
+            int_buffer[k_mem_size - 1]++;
+            int_buffer[val] = read_cnt;
+            if (val == maximum_flipped_val + 1) {
+                table.flip_queried_card();
+            }
+        }
+    }
+
+    void action(Table& table) const override {}
+};

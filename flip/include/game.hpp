@@ -14,10 +14,11 @@ public:
         // agent_strategy = std::make_unique<RandomStrategy>();
         // agent_strategy = std::make_unique<AlwaysLastStrategy>();
         // agent_strategy = std::make_unique<QSortStrategy>();
-        agent_strategy = std::make_unique<ZStrategy>();
+        // agent_strategy = std::make_unique<ZStrategy>();
+        agent_strategy = std::make_unique<OnePersonStrategy>();
 
-        // print_debug_msg = true;
-        print_debug_msg = false;
+        print_debug_msg = true;
+        // print_debug_msg = false;
 
         reset_game();
     }
